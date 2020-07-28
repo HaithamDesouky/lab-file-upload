@@ -22,6 +22,16 @@ postRouter.get('/create', routeGuard, (req, res, next) => {
   res.render('users/create-post');
 });
 
+postRouter.get('/post/:id', routeGuard, (req, res, next) => {
+  const id = req.params.id;
+  Post.findById(id)
+    .populate('creatorId')
+    .then(post => {
+      res.render('single', { post });
+    })
+    .catch(error => next(error));
+});
+
 postRouter.get('/feed', routeGuard, (req, res, next) => {
   Post.find()
     .populate('creatorId')
