@@ -19,11 +19,13 @@ const userSchema = new Schema(
       lowercase: true,
       trim: true
     },
+    picturePath: { type: String },
     passwordHash: {
       type: String,
       required: [true, 'Password is required.']
     }
   },
+
   {
     timestamps: true
   }

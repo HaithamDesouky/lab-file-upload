@@ -6,6 +6,18 @@ const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
 const User = require('../models/User.model');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'node-file-upload-example'
+  }
+});
+
+const upload = multer({ storage });
 
 const routeGuard = require('../configs/route-guard.config');
 
@@ -17,9 +29,10 @@ const routeGuard = require('../configs/route-guard.config');
 router.get('/signup', (req, res) => res.render('auth/signup'));
 
 // .post() route ==> to process form data
-router.post('/signup', (req, res, next) => {
-  const { username, email, password } = req.body;
-
+router.post('/signup', upload.single('attachment'), (req, res, next) => {
+  const { username, email, password, content } = req.body;
+  const url = req.file.path;
+  console.log('this is supposed to be the content', url);
   if (!username || !email || !password) {
     res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email and password.' });
     return;
@@ -42,6 +55,8 @@ router.post('/signup', (req, res, next) => {
         // username: username
         username,
         email,
+        picturePath: url,
+
         // passwordHash => this is the key from the User model
         //     ^
         //     |            |--> this is placeholder (how we named returning value from the previous method (.hash()))
@@ -75,6 +90,8 @@ router.get('/login', (req, res) => res.render('auth/login'));
 // .post() login route ==> to process form data
 router.post('/login', (req, res, next) => {
   const { email, password } = req.body;
+
+
 
   if (email === '' || password === '') {
     res.render('auth/login', {

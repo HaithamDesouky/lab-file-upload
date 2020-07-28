@@ -118,3 +118,28 @@ ul li {
   font-weight: bold;
   font-size: 2em;
 }
+
+img {
+  height: 15rem;
+  width: 20rem;
+}
+
+.feed {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.feed p {
+  font-size: 3rem;
+}
+
+#posts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 2rem;
+}
