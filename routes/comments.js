@@ -22,27 +22,25 @@ const { countDocuments } = require('../models/User.model');
 commentRouter.get('/post/:id/comment', routeGuard, (req, res, next) => {
   const postId = req.params.id;
 
-  console.log(req.body);
   res.render('comment', { postId });
 });
 
 commentRouter.post('/post/:id/comment', upload.single('attachment'), routeGuard, (req, res, next) => {
-  const id = req.params.id;
+  const postId = req.params.id;
   const user = req.session.currentUser._id;
-  console.log(id);
-  console.log(user);
-
-  console.log('hey body', req.body.content);
 
   Comment.create({
     content: req.body.content,
     creatorId: user,
-    postId: id,
+    postId: postId,
     imagePath: req.body.imagePath,
     imageName: req.body.imageName
   })
+    .then(comment => {
+      return Post.findByIdAndUpdate(postId, { $push: { comments: comment._id } });
+    })
     .then(() => {
-      res.redirect(`/post/${id}`);
+      res.redirect(`/post/${postId}`);
     })
     .catch(error => {
       next(error);

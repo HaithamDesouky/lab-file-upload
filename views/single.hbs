@@ -9,4 +9,15 @@
 
 </form>
 
+<div class="comments" style="display: flex; justify-content:center; align-items:center">
  
+
+ {{#each post.comments}}
+
+  {{this.content}}
+
+  {{creatorId.username}}
+
+ {{/each}}
+ 
+ </div>

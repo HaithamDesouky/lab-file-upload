@@ -14,7 +14,7 @@ const postSchema = new mongoose.Schema({
   },
   picPath: { type: String },
   picName: { type: String },
-  comments: [mongoose.Schema.Types.ObjectId]
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
 });
 
 const Post = mongoose.model('Post', postSchema);
