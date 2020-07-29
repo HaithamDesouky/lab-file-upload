@@ -26,7 +26,9 @@ postRouter.get('/post/:id', routeGuard, (req, res, next) => {
   const id = req.params.id;
   Post.findById(id)
     .populate('creatorId')
+    .populate('commments')
     .then(post => {
+      console.log(post);
       res.render('single', { post });
     })
     .catch(error => next(error));
@@ -36,6 +38,7 @@ postRouter.get('/feed', routeGuard, (req, res, next) => {
   Post.find()
     .populate('creatorId')
     .then(post => {
+      console.log(post);
       res.render('feed', { post });
     })
     .catch(error => next(error));

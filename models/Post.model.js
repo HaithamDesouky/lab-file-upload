@@ -13,7 +13,8 @@ const postSchema = new mongoose.Schema({
     required: true
   },
   picPath: { type: String },
-  picName: { type: String }
+  picName: { type: String },
+  comments: [mongoose.Schema.Types.ObjectId]
 });
 
 const Post = mongoose.model('Post', postSchema);

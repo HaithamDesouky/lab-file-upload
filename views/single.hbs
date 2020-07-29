@@ -1,6 +1,12 @@
 <div id="posts">
 <h2>{{post.creatorId.username}}</h2>
 
-<a href="/post/{{id}}"><img src="{{post.picPath}}" ></a>
+<a href="/post/{{post.id}}"><img src="{{post.picPath}}" ></a>
 <p>{{post.content}}</p>
 </div>
+
+<a href="/post/{{post.id}}/comment"> Leave a comment!</a>
+
+</form>
+
+ 
